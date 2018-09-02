@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = {
   mode: 'development',
@@ -12,6 +13,10 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
       {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
@@ -33,6 +38,12 @@ module.exports = {
       {
         template: path.resolve(__dirname, './src/index.html')
       }
-    )
-  ]
+    ),
+    new VueLoaderPlugin()
+  ],
+  resolve: {
+    alias: {
+      vue: 'vue/dist/vue.esm.js'
+    }
+  }
 }
