@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>jQuery版</title>
+  <style>
+  #modal-content{
+    width:80%;
+    margin:0;
+    padding:0;
+    background:#fff;
+    position:fixed;
+    display:none ;
+    z-index:99999;
+  }
+  #modal-content .inner{
+    position:relative;
+  }
+  #modal-content .inner{
+    position:relative;
+    width:100%;
+    padding-top:56.25%;
+    overflow:hidden;
+  }
+  #modal-content .inner #player{
+    position:absolute;
+    top:0;
+    right:0;
+    width:100%;
+    height:100%;
+  }
+  #modal-overlay{
+    z-index:9999;
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:120%;
+    background-color:rgba( 0,0,0, 0.75 );
+  }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <h1>a test production!!</h1>
+  <p id="tgt">switch</p>
+  <div id="test"></div>
+
+  <!--  -->
+  <div id="modal-content">
+  <div class="inner">
+  <div id="player"></div>
+  </div>
+  </div>
+
+  <ul class="list-link-01">
+  <li><a id="modal-open" class="button-link" href="#">モーダルで再生する</a></li>
+  </ul>
+
+
+  <!--  -->
+<script type="text/javascript">
+
+$(function(){
+  'use scrict';
+
+  //プレイヤー変数
+  var player;
+
+  //オブジェクト生成
+  function youtubeAPIInit() {
+    var scriptTag = document.createElement('script');
+    scriptTag.src = "https://www.youtube.com/iframe_api";
+    var fsTag = document.getElementsByTagName('script')[0];
+    fsTag.parentNode.insertBefore(scriptTag, fsTag);
+    window.onYouTubeIframeAPIReady = function(){
+      player = new YT.Player('player', {
+        height:'540',
+        width:'960',
+        videoId:'236KUEBlXLE',
+        playerVars:{
+          autohide:1,
+          controls:1,
+          modestbranding:1,
+          iv_load_policy:3,
+          showinfo:0,
+          rel:0,
+          autoplay:0
+        }
+      });
+    };
+  }
+
+  //モーダル
+  var modal = {}, $lay, $content;
+  modal.inner = function() {
+    if($("#modal-overlay")[0]) return false;
+    $("body").append('<div id="modal-overlay"></div>');
+    $lay = $("#modal-overlay");
+    $content = $("#modal-content");
+    $lay.fadeIn("slow");
+    youtubeAPIInit();
+    this.resize();
+    $content.fadeIn("fast");
+    $lay.unbind().click(function() {
+      player.pauseVideo();
+      $content.add($lay).fadeOut("fast",function(){
+        $lay.remove();
+      });
+    });
+  };
+
+  //リサイズ処理
+  modal.resize = function(){
+    var $winWidth = $(window).width();
+    var $winHeight = $(window).height();
+    var $contentOuterWidth = $("#modal-content").outerWidth();
+    var $contentOuterHeight = $("#modal-content").outerHeight();
+    $("#modal-content").css({
+      "left": (($winWidth - $contentOuterWidth) / 2) + "px",
+      "top": (($winHeight - $contentOuterHeight) / 2) + "px"
+    });
+  }
+
+  //クリック処理
+  $("#modal-open").click(function(){
+    modal.inner();
+    // player.playVideo();
+  });
+  $(window).resize(modal.resize);
+});
+</script>
+
+
+</body>
+</html>
