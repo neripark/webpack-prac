@@ -35,6 +35,7 @@ export default {
     },
     modalClose() {
       this.isModalOpen = false;
+      this.yt.pause();
     },
 
   }

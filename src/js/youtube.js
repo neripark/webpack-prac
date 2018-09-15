@@ -19,9 +19,9 @@ export default class youtube {
   //   window.player.playVideo();
   // }
 
-  // pause() {
-  //   window.player.pauseVideo();
-  // }
+  pause() {
+    window.player.pauseVideo();
+  }
 
   onReady(setting) {
     return () => {
