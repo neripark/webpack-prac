@@ -15,23 +15,19 @@
 </template>
 
 <script>
-import Youtube from "../js/youtube.js";
+import { Youtube } from "../js/youtube.js";
 
 export default {
-  created() {
-    // this.yt = new Youtube("mNpPQXMgtmw");
-    // this.yt = new Youtube("236KUEBlXLE");
-  },
   data() {
     return {
-      isModalOpen: false
+      isModalOpen: false,
+      yt: {}
     };
   },
   methods: {
     modalOpen() {
       this.isModalOpen = true;
-      // this.yt = new Youtube("mNpPQXMgtmw");
-      this.yt = new Youtube("236KUEBlXLE"); // トーマス
+      this.yt = new Youtube("mNpPQXMgtmw");
     },
     modalClose() {
       this.isModalOpen = false;
@@ -49,12 +45,8 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    // width: 960px;
-    // height: 540px;
-    // background: #fff;
     z-index: 2;
   }
-
   .overlay {
     position: absolute;
     width: 100vw;
@@ -77,6 +69,7 @@ export default {
   }
 }
 
+// transition
 .v-enter-active, .v-leave-active {
   transition: opacity .3s
 }

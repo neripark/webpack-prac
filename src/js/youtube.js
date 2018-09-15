@@ -1,5 +1,5 @@
 // youtubeの動画を再生するスクリプト
-export default class youtube {
+export class Youtube {
 
   constructor(videoId) {
     this.videoId = videoId;
@@ -9,9 +9,10 @@ export default class youtube {
   init() {
     // youtube APIを読み込んで実行
     const scriptTag = document.createElement("script");
-    scriptTag.src = this.youtubeApiUrl;
     const fsTag = document.getElementsByTagName("script")[0];
+    scriptTag.src = this.youtubeApiUrl;
     fsTag.parentNode.insertBefore(scriptTag, fsTag);
+    // グローバルな領域にコールバックを定義
     window.onYouTubeIframeAPIReady = this.onReady(this.videoSetting);
   }
 
