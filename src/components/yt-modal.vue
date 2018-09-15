@@ -6,7 +6,7 @@
     <transition class="fade">
       <div class="yt-wrap" v-show="isModalOpen">
         <div class="player-box">
-          <div id="player"></div>
+          <div :id="dist"></div>
         </div>
         <div class="overlay" @click="modalClose"></div>
       </div>
@@ -18,22 +18,23 @@
 import { Youtube } from "../js/youtube.js";
 
 export default {
+  props: ["vid", "dist"],
   data() {
     return {
       isModalOpen: false,
-      yt: {}
+      yt: undefined
     };
   },
   methods: {
     modalOpen() {
       this.isModalOpen = true;
-      this.yt = new Youtube("mNpPQXMgtmw");
+      // 初回のみインスタンス生成
+      if (!this.yt) this.yt = new Youtube(this.vid, this.dist);
     },
     modalClose() {
       this.isModalOpen = false;
       this.yt.pause();
-    },
-
+    }
   }
 }
 </script>

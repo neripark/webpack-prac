@@ -1,34 +1,44 @@
+const uuidv4 = require('uuid/v4');
+
 // youtubeの動画を再生するスクリプト
 export class Youtube {
 
-  constructor(videoId) {
+  constructor(videoId, distId) {
     this.videoId = videoId;
+    this.distId = distId;
+    this.playerId = `player_${uuidv4()}`;
     this.init();
   }
 
   init() {
-    // youtube APIを読み込んで実行
-    const scriptTag = document.createElement("script");
-    const fsTag = document.getElementsByTagName("script")[0];
-    scriptTag.src = this.youtubeApiUrl;
-    fsTag.parentNode.insertBefore(scriptTag, fsTag);
-    // グローバルな領域にコールバックを定義
-    window.onYouTubeIframeAPIReady = this.onReady(this.videoSetting);
+    if (!window.onYouTubeIframeAPIReady) {
+      // youtube API未取得の場合は取得してからプレイヤーをイニシャライズ
+      const scriptTag = document.createElement("script");
+      const fsTag = document.getElementsByTagName("script")[0];
+      scriptTag.src = this.youtubeApiUrl;
+      fsTag.parentNode.insertBefore(scriptTag, fsTag);
+      window.onYouTubeIframeAPIReady = this.initPlayer();
+    } else {
+      // 取得済の場合はすぐにプレイヤーをイニシャライズ
+      (this.initPlayer())();
+    };
   }
 
   // play() {
-  //   window.player.playVideo();
+  //   window[this.playerId].playVideo();
   // }
 
   pause() {
-    window.player.pauseVideo();
+    window[this.playerId].pauseVideo();
   }
 
-  onReady(setting) {
+  initPlayer() {
+    const distId = this.distId;
+    const playerId = this.playerId;
+    const setting = this.videoSetting;
     return () => {
       // グローバルな場所にプレイヤーをイニシャライズ
-      window.player = new YT.Player("player", setting);
-      console.log('The video is ready.');
+      window[playerId] = new YT.Player(distId, setting); // 第１引数は描画先のID
     }
   }
 
@@ -36,11 +46,28 @@ export class Youtube {
     return "https://www.youtube.com/iframe_api";
   }
 
+  // ***** プレイヤーのID *****
+  set playerId(playerId) {
+    this._playerId = playerId;
+  }
+  get playerId() {
+    return this._playerId;
+  }
+
+  // ***** 動画のID *****
   set videoId(videoId) {
     this._videoId = videoId;
   }
   get videoId() {
     return this._videoId;
+  }
+
+  // ***** 描画先の要素のID *****
+  set distId(distId) {
+    this._distId = distId;
+  }
+  get distId() {
+    return this._distId;
   }
 
   // 動画のセッティング

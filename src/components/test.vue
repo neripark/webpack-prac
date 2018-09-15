@@ -5,7 +5,8 @@
       <p>{{int}}</p>
     </section>
     <button @click="increment">increment!!</button>
-    <yt-modal />
+    <yt-modal :vid="'mNpPQXMgtmw'" :dist="'keyaki'" />
+    <yt-modal :vid="'236KUEBlXLE'" :dist="'tomas'" />
   </div>
 </template>
 

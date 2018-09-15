@@ -35,6 +35,6 @@
     "webpack-serve": "^2.0.2"
   },
   "dependencies": {
-    "vue-youtube": "^1.2.5"
+    "uuid": "^3.3.2"
   }
 }
