@@ -1,11 +1,10 @@
-import Animal from "./class.js";
-import "./style.scss"
-import Test from "./test.vue"
+import Animal from "./js/class.js";
+import "./scss/style.scss"
+import Test from "./components/test.vue"
 import Vue from "vue";
 
 const tiger = new Animal('tama', 'ねこ', 'nya-n');
 const tgt = document.getElementById('tgt');
-// tiger.check();
 tgt.innerHTML = tiger.check();
 
 new Vue({

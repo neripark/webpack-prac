@@ -5,11 +5,17 @@
       <p>{{int}}</p>
     </section>
     <button @click="increment">increment!!</button>
+    <yt-modal />
   </div>
 </template>
 
 <script>
+import ytModal from "./yt-modal.vue";
+
 export default {
+  components: {
+    ytModal
+  },
   data() {
     return {
       int: 0
