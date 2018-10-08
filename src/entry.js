@@ -8,9 +8,7 @@ const tgt = document.getElementById('tgt');
 tgt.innerHTML = tiger.check();
 
 new Vue({
-  el: "#test",
-  template: '<test/>',
-  components: {
-    Test
+  render(el) {
+    return el(Test);
   }
-});
+}).$mount("#test");

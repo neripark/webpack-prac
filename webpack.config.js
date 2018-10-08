@@ -39,11 +39,7 @@ module.exports = {
         template: path.resolve(__dirname, './src/index.html')
       }
     ),
+    // vue-loader v15以上の場合は必要
     new VueLoaderPlugin()
-  ],
-  resolve: {
-    alias: {
-      vue: 'vue/dist/vue.esm.js'
-    }
-  }
+  ]
 }
